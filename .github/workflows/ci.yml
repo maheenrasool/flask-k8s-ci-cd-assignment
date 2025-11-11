@@ -1,21 +1,17 @@
-name: CI
+name: CI Workflow
 
-on:
-  push:
-    branches: ["*"]
+on: [push]
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: 3.11
 
       - name: Install dependencies
         run: |
@@ -31,5 +27,3 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t my-app:latest .
-
-
