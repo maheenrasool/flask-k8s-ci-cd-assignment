@@ -1,5 +1,5 @@
+from app import hello
 
-from app import add
 
-def test_add():
-    assert add(2, 3) == 5
+def test_hello():
+    assert hello() == "Hello, World from Flask CI/CD!"
