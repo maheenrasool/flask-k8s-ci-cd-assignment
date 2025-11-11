@@ -1,6 +1,9 @@
+# tests/test_app.py
 
-from app import add
+from app import hello
 
-def test_add():
-    assert add(2, 3) == 5
 
+def test_hello(capsys):
+    hello()
+    captured = capsys.readouterr()
+    assert captured.out == "Hi\n"
