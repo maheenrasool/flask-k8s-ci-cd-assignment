@@ -1,4 +1,8 @@
-def add(a, b):
-    return a + b
+# app.py
+
+def hello():
+    return "Hi"
 
 
+if __name__ == "__main__":
+    print(hello())
