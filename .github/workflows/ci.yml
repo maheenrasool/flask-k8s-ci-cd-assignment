@@ -31,5 +31,5 @@ jobs:
       - name: Build Docker image
 
         run: docker build -t my-app:latest .
-        run: docker build -t my-app:latest .
+ 
 
