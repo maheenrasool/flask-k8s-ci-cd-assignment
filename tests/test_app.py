@@ -1,5 +1,7 @@
 from app import hello
 
-
-def test_hello():
-    assert hello() == "Hello, World from Flask CI/CD!"
+def test_hello(capsys):
+    hello()
+    captured = capsys.readouterr()
+    assert captured.out.strip() == "Hi"
+    
