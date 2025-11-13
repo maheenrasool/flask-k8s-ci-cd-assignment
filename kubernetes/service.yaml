@@ -1,12 +1,25 @@
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: flask-service
+# spec:
+#   selector:
+#     app: flask-app
+#   ports:
+#     - protocol: TCP
+#       port: 80
+#       targetPort: 5000
+#   type: NodePort
+
 apiVersion: v1
 kind: Service
 metadata:
   name: flask-service
 spec:
+  type: NodePort  # exposes the app externally via a port on your node
   selector:
     app: flask-app
   ports:
-    - protocol: TCP
-      port: 80
+    - port: 5000
       targetPort: 5000
-  type: NodePort
+      nodePort: 30007  # optional fixed port (range 30000–32767)
