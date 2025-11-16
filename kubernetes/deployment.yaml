@@ -1,22 +1,3 @@
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: flask-deployment
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: flask-app
-#   template:
-#     metadata:
-#       labels:
-#         app: flask-app
-#     spec:
-#       containers:
-#         - name: flask-container
-#           image: flask-app:latest
-#           ports:
-#             - containerPort: 5000
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -24,10 +5,10 @@ metadata:
   labels:
     app: flask-app
 spec:
-  # 🔹 Multiple replicas for scaling demonstration
+  # Multiple replicas for scaling
   replicas: 3
 
-  # 🔹 Rolling update configuration
+  # Rolling update settings
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -46,9 +27,11 @@ spec:
       containers:
         - name: flask-container
           image: flask-app:latest
+          imagePullPolicy: Never     # ← FIX that makes Minikube use your local image
           ports:
             - containerPort: 5000
-          # 🔹 Resource limits and requests
+
+          # Resource requests and limits
           resources:
             requests:
               cpu: "100m"
