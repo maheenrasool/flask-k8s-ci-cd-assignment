@@ -1,13 +1,10 @@
-# Stage 1: Build
-FROM python:3.11-slim AS builder
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Stage 2: Run
 FROM python:3.11-slim
+
 WORKDIR /app
-COPY --from=builder /usr/local /usr/local
-COPY . .
-EXPOSE 5000
-CMD ["python", "app.py"]
+
+COPY . /app
+
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+CMD ["python3", "app/app.py"]
