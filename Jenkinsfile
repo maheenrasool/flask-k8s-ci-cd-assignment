@@ -1,28 +1,39 @@
 pipeline {
     agent any
 
+    environment {
+        KUBECONFIG = "C:\\ProgramData\\Jenkins\\.kube\\config"
+    }
+
     stages {
+
         stage('Build Docker Image') {
             steps {
                 echo 'Building Docker image...'
-                bat 'docker build -t flask-app .'
+                bat """
+                docker build -t flask-app .
+                """
             }
         }
 
         stage('Deploy to Kubernetes') {
             steps {
                 echo 'Deploying to Kubernetes...'
-                bat 'kubectl apply -f kubernetes/deployment.yaml'
-                bat 'kubectl apply -f kubernetes/service.yaml'
+                bat """
+                kubectl --kubeconfig=%KUBECONFIG% apply -f kubernetes/deployment.yaml --validate=false
+                kubectl --kubeconfig=%KUBECONFIG% apply -f kubernetes/service.yaml --validate=false
+                """
             }
         }
 
         stage('Verify Deployment') {
             steps {
                 echo 'Verifying deployment...'
-                bat 'kubectl rollout status deployment/flask-deployment'
-                bat 'kubectl get pods'
-                bat 'kubectl get services'
+                bat """
+                kubectl --kubeconfig=%KUBECONFIG% rollout status deployment/flask-deployment
+                kubectl --kubeconfig=%KUBECONFIG% get pods
+                kubectl --kubeconfig=%KUBECONFIG% get services
+                """
             }
         }
     }
